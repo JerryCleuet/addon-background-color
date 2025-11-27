@@ -1,0 +1,30 @@
+name: MonWorkflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  nomquejeveux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/Checkout@v4 # Equivalent à un clone sur la machine sous ubuntu-latest
+      
+      - name: installation des dépendances
+        run: npm i
+
+      - name: build firefox
+        run: npm run build:firefox
+
+      - name: create artefact
+        run : npm run pack:zip
+      
+      - name: upload build artifact
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          path: ./dist-artifacts
+
