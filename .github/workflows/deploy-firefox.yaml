@@ -26,5 +26,5 @@ jobs:
             --api-key ${{ secrets.AMO_JWT_ISSUER }} \
             --api-secret ${{ secrets.AMO_JWT_SECRET }} \
             --channel unlisted \
-            --source-dir ./ .output/firefox-mv2 \
+            --source-dir ./.output/firefox-mv2 \
             --artifacts-dir ./signed
