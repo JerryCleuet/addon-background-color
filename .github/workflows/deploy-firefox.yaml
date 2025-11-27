@@ -1,12 +1,12 @@
-name: MonWorkflow
+name: deployWorkflow
 
 on:
   push:
+    tags:
+      - '*'
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+
 jobs:
   build-firefox:
     runs-on: ubuntu-latest
@@ -19,13 +19,20 @@ jobs:
 
       - name: build firefox
         run: npm run build:firefox
+      
+      - name: Sign with web-ext
+        run: |
+          npx web-ext sign \
+            --api-key ${{ secrets.AMO_JWT_ISSUER }} \
+            --api-secret ${{ secrets.AMO_JWT_SECRET }} \
+            --channel unlisted \
+            --source-dir ./build \
+            --artifacts-dir ./signed
 
       - name: create artefact
-        run : npm run zip
+        run : npm run pack:zip
       
       - name: upload build artifact
         uses: actions/upload-artifact@v5.0.0
         with:
-          path: ./dist-artifacts
-
-        
+          path: ./
