@@ -21,7 +21,7 @@ jobs:
         run: npm run build:firefox
 
       - name: create artefact
-        run : npm run pack:zip
+        run : npm run zip
       
       - name: upload build artifact
         uses: actions/upload-artifact@v5.0.0
